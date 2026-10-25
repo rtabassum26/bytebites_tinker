@@ -28,13 +28,18 @@ class Menu:
 
     def add_item(self, item: FoodItem) -> None:
         """Add a food item to the menu."""
-        pass
+        self.items.append(item)
 
     def filter_by_category(self, category: str) -> list[FoodItem]:
         """Return a new list of items in the given 
         category, ignoring capitalization.
         """
-        pass
+        target = category.lower()
+        matches: list[FoodItem] = []
+        for item in self.items:
+            if item.category.lower() == target:
+                matches.append(item)
+        return matches
 
 
 class Transaction:
@@ -49,13 +54,16 @@ class Transaction:
         """Add a selected food item to the transaction. 
         Add the same item again to buy more than one.
         """
-        pass
+        self.items.append(item)
 
     def calculate_total(self) -> float:
         """Return the total price of all items, 
         rounded to 2 decimal places.
         """
-        pass
+        total = 0.0
+        for item in self.items:
+            total += item.price
+        return round(total, 2)
 
 
 class Customer:
@@ -71,11 +79,11 @@ class Customer:
         """Add a completed transaction 
         to the customer's purchase history.
         """
-        pass
+        self.purchase_history.append(transaction)
 
     def is_verified_user(self) -> bool:
         """Return True if the customer 
         has at least one completed purchase. 
         This is not identity authentication.
         """
-        pass
+        return len(self.purchase_history) > 0
